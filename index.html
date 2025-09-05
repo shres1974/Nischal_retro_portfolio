@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Nischal Shrestha – Personal Website</title>
+    <meta
+      name="description"
+      content="I’m Nischal Shrestha — Data Scientist at CIPO and Teaching Assistant at Carleton University. I turn messy problems into clean, reliable products."
+    />
+
+    <link rel="icon" type="image/png" href="/icon/32x32.png" />
+
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon/180x180.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Nischal Shrestha – Personal Website" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#f6d4b1" />
+
+    <meta property="og:title" content="Nischal Shrestha – Personal Website" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nischal.dev/" />
+    <meta property="og:image" content="https://nischal.dev/icon/og-img1.png" />
+    <meta
+      name="og:description"
+      content="Data Scientist @ CIPO • TA @ Carleton • ex-Software Dev @ Interact Health PRO."
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <script>
+    // 1) Don’t auto-restore scroll on reload
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  
+    // 2) If the page is reloaded, strip any hash and jump to top
+    const navEntries = performance.getEntriesByType('navigation');
+    const isReload = navEntries && navEntries[0] && navEntries[0].type === 'reload';
+    if (isReload) {
+      if (location.hash) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+      window.scrollTo(0, 0);
+    }
+  
+    // 3) Optional: make nav links scroll without putting a hash in the URL
+    document.querySelectorAll('nav .menu-body a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        // keep the URL clean (no #fragment), so reload starts at top
+        history.replaceState(null, '', location.pathname + location.search);
+      });
+    });
+  </script>
+  
+  <body>
+    <div id="home"></div>
+
+    <canvas class="webgl"></canvas>
+
+    <!-- Backup hero for no-WebGL -->
+    <div id="hero-backup">
+      <h3>Hi there, I’m</h3>
+      <h1>Nischal</h1>
+      <ul>
+        <li>Data Scientist</li>
+        <li>Teaching Assistant</li>
+      </ul>
+    </div>
+
+    <nav>
+      <div class="menu-btn">
+        <button class="btn" onclick="toggleMenu()">
+          <svg width="16" height="16" aria-hidden="true">
+            <rect class="st0" width="16" height="3.2" />
+            <rect y="6.4" class="st0" width="16" height="3.2" />
+            <rect y="12.8" class="st0" width="16" height="3.2" />
+          </svg>
+        </button>
+        <div style="display: flex">
+          <!-- LinkedIn -->
+          <a class="btn" href="https://www.linkedin.com/in/nischalshres/" target="_blank" aria-label="LinkedIn">
+            <svg width="16" height="16" aria-hidden="true">
+              <path d="M0.1,2c0-1,0.8-1.8,1.9-1.8c1,0,1.8,0.9,1.8,1.8c0,1-0.8,1.9-1.8,1.9C0.9,3.9,0.1,3.1,0.1,2z M0.1,5h3.7v9.8 H0.1V5z"/>
+              <path d="M15.9,8.5v6.2h-3.5V9.4c0-0.9-0.6-1.6-1.5-1.6c-0.8,0-1.4,0.6-1.4,1.5v5.5H5.8V5h3.7v1 c0.6-0.7,1.6-1.2,2.8-1.2C14.4,4.7,15.9,6.3,15.9,8.5z"/>
+            </svg>
+          </a>
+          <!-- GitHub -->
+          <a class="btn" href="https://github.com/shres1974" target="_blank" aria-label="GitHub">
+            <svg width="16" height="16" aria-hidden="true">
+              <path d="M10.6,12.9c0-1-0.3-1.6-0.7-2c2.4-0.3,4.9-1.1,4.9-5.2c0-1.1-0.4-2.1-1.1-2.9c0.1-0.3,0.5-1.3-0.1-2.8 c0,0-0.9-0.3-3,1.1c-1.7-0.5-3.6-0.5-5.4,0c-2-1.4-3-1.1-3-1.1C1.6,1.4,2,2.5,2.1,2.8C1.4,3.5,1,4.6,1,5.6c0,4.1,2.5,5,4.9,5.3 c-0.4,0.4-0.6,0.9-0.7,1.4c-0.6,0.3-2.2,0.7-3.1-0.9c0,0-0.6-1-1.6-1.1c0,0-1.1,0-0.1,0.7c0,0,0.7,0.3,1.1,1.6c0,0,0.6,2.1,3.6,1.5 c0,0.9,0,1.8,0,1.8h5.3C10.6,15.9,10.6,14.4,10.6,12.9z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="menu-body" onclick="closeMenu()">
+        <a href="#home" onclick="closeMenu()">Home</a>
+        <a href="#aboutMe" onclick="closeMenu()">About</a>
+        <a href="#experience" onclick="closeMenu()">Experience</a>
+        <a href="#projects" onclick="closeMenu()">Projects</a>
+        <a href="#contact" onclick="closeMenu()">Contact</a>
+      </div>
+
+      <div id="tip-scroll">Scroll &#8595;</div>
+    </nav>
+
+    <main>
+      <!-- ABOUT -->
+      <section>
+        <h1 id="aboutMe">Hi there</h1>
+        <p>I’m Nischal Shrestha, a CS student at Carleton in the Software Engineering stream.</p>
+        <p>I currently work as a Data Scientist with the Government of Canada (CIPO), turning messy IP data into clear, usable insights, and I also serve as a Teaching Assistant for calculus and linear algebra.</p>
+        <p>I’ve shipped things people rely on—from a price tracker that actually saves money to a healthcare platform built to stay up when it matters.</p>
+        <p>I like taking tangled problems and engineering clean solutions—even if it means rewriting the same function five times to get it right.</p>
+        <p>Below are my recent experience and a few projects—from quick experiments to real-world applications.</p>
+      </section>
+
+<!-- EXPERIENCE -->
+<section>
+  <h1 id="experience">Experience</h1>
+  <hr />
+
+  <!-- CIPO -->
+  <h2>Data Scientist — Government of Canada (CIPO)</h2>
+  <h3>May 2025 – Present · Ottawa, ON</h3>
+  <ul class="skills">
+    <li>Public Service</li><li>Data</li><li>Impact</li>
+  </ul>
+
+  <h4>Section</h4>
+  <p>Canadian Intellectual Property Office (CIPO) under Innovation, Science and Economic Development Canada.</p>
+
+  <h4>Work I did</h4>
+  <p>Turned raw patent records into clear, usable insights and tools—cleaning datasets, building pipelines, and packaging results so teams could make decisions faster.</p>
+
+  <h4>Team I was in</h4>
+  <p>Worked across Economic Research (ER) and Operations Research (OR), collaborating with analysts, data scientists, and policy stakeholders.</p>
+
+  <h4>Organization context</h4>
+  <p>CIPO administers IP in Canada (patents, trademarks, etc.). My work supports research and operations that inform how Canada understands innovation activity.</p>
+
+  <hr />
+
+  <!-- TA -->
+  <h2>Teaching Assistant — Carleton University</h2>
+  <h3>Sept 2023 – Present · Calculus &amp; Linear Algebra</h3>
+  <ul class="skills">
+    <li>Teaching</li><li>Mentorship</li><li>Communication</li>
+  </ul>
+
+  <h4>Section</h4>
+  <p>School of Mathematics &amp; Statistics, undergraduate courses in Calculus and Linear Algebra.</p>
+
+  <h4>Work I did</h4>
+  <p>Led review sessions, created practice material, and supported grading and office hours—helping students get comfortable with core concepts.</p>
+
+  <h4>Team I was in</h4>
+  <p>Collaborated with course instructors and fellow TAs to align on teaching goals and provide consistent support.</p>
+
+  <h4>Organization context</h4>
+  <p>Carleton University is a leading Canadian university; these foundational courses serve students across STEM programs.</p>
+
+  <hr />
+
+<!-- Interact Health PRO -->
+<!-- Interact Health PRO -->
+<h2>Software Developer — Interact Health PRO</h2>
+<h3>Jan 2025 – Apr 2025 · Remote</h3>
+<ul class="skills">
+  <li>Ship Fast</li><li>Reliability</li><li>User Focus</li>
+</ul>
+
+<h4>Section</h4>
+<p>
+  Product engineering for Interact Health PRO, supporting a network of rehabilitation centres and treatment facilities across the GTA.
+</p>
+
+<h4>Work I did</h4>
+<p>
+  Delivered features end-to-end—from APIs and data models to clinician-facing UI—for scheduling, records, and reporting. Prioritized reliability and smooth handoffs with CI/CD and clear docs.
+</p>
+
+<h4>Team I was in</h4>
+<p>
+  Partnered with a small engineering team, product leads, and clinical stakeholders to scope, test, and iterate quickly based on feedback.
+</p>
+
+<h4>Organization context</h4>
+<p>
+  The organization coordinates care for pain-related conditions, working directly with primary caregivers and clinics to produce Patient Advisory Reports and maintain proper medical records. Doctors and therapists collaborate closely to ensure each patient’s needs are met.
+</p>
+
+
+
+
+
+      <!-- PROJECTS -->
+      <section>
+        <h1 id="projects">Projects</h1>
+        <hr />
+        
+
+        <!-- Campus Marketplace (Ecommerce) -->
+        <h2>Shopix - Campus Marketplace</h2>
+        <h3>2025</h3>
+        <ul class="skills">
+          <li>Nx Monorepo</li>
+          <li>Node</li>
+          <li>Microservices</li>
+          <li>Kafka</li>
+          <li>Stripe Connect</li>
+          <li>Docker</li>
+          <li>CI/CD</li>
+        </ul>
+        <p>
+          Built by students for students — a multi-vendor campus marketplace. The workspace is organized as an
+          Nx monorepo with service boundaries for auth, product, seller, and orders. Local dev uses Nx tasks
+          (serve/build) to spin up services quickly and keep everything consistent.
+        </p>
+        <p>
+          <strong>So far:</strong> Nx workspace scaffolded, initial <code>auth-service</code> running in dev, shared libs planned,
+          and service contracts outlined for the core domains.
+        </p>
+        <p>
+          <strong>Next steps:</strong> event-driven communication with Kafka, API gateway + service registry, Stripe Connect
+          for multi-vendor payouts, role-based auth & permissions, ImageKit for media, real-time analytics via WebSocket,
+          and containerization + CI/CD for production deployment.
+        </p>
+        
+
+        <div class="image">
+          <img
+            src="/src/img/Screenshot 2025-09-04 at 7.28.13 PM.png"
+            width="100%"
+            alt="Campus Marketplace architecture"
+            loading="lazy"
+            style="aspect-ratio: 16 / 9"
+          />
+        </div>
+        <hr/>
+
+
+      <!-- AlgoVis -->
+      <h2><a href="https://github.com/shres1974/AlgoVis" target="_blank">AlgoVis</a></h2>
+      <h3>Algorithm Visualization Showcase</h3>
+      <ul class="skills">
+        <li>C++</li><li>SFML</li><li>Sorting</li><li>Pathfinding</li><li>Education</li>
+      </ul>
+      <p>
+        Interactive visualizations for sorting and grid algorithms (Flood Fill, BFS, Insertion, Shell, Gnome). 
+        Speed control, pause/resume, and custom array/grid sizes for hands-on learning.
+      </p>
+
+      <!-- UML / Architecture diagram link near the top -->
+      <p>
+        <a
+          class="btn"
+          href="https://raw.githubusercontent.com/shres1974/AlgoVis/main/demo/AlgoSketch-UML.jpeg"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View UML Diagram ↗
+        </a>
+      </p>
+
+      <p>
+        Known limits: speed tied to FPS can lag with large inputs. Roadmap: DFS/Dijkstra/A*, custom graphs/trees, and rendering optimizations.
+      </p>
+
+      <!-- Demo GIF -->
+      <div class="image">
+        <img
+          src="/src/img/combined_demo_4.gif"
+          width="100%"
+          alt="AlgoVis combined demo animation showing multiple algorithms"
+          loading="lazy"
+          style="aspect-ratio: 16 / 9"
+        />
+      </div>
+
+      <hr />
+          
+          
+          
+
+
+     <!-- TrackMyAmazon -->
+        <h2><a href="https://github.com/shres1974/AmazonTracker" target="_blank">TrackMyAmazon</a></h2>
+        <h3>Real-time Price & Stock Tracking</h3>
+        <ul class="skills">
+          <li>Next.js</li><li>TypeScript</li><li>MongoDB</li><li>Bright Data</li><li>Cron</li>
+        </ul>
+        <p>
+          Tracks Amazon price and stock changes and sends email alerts when deals land. Automated refresh jobs keep data current; 
+          a clean UI makes it easy to monitor products.
+        </p>
+
+        <!-- Live Demo button -->
+        <p>
+          <a class="btn" href="https://trackmyamazon.vercel.app" target="_blank" rel="noopener noreferrer">
+            Live Demo ↗
+          </a>
+        </p>
+
+        <p>
+          Next steps: user auth, multi-site tracking, and price trend analytics. MIT licensed.
+        </p>
+
+        <!-- Architecture / scraper diagram -->
+
+
+        <!-- UI screenshot -->
+        <div class="image">
+          <img
+            src="/src/img/webscraper.png"
+            width="100%"
+            alt="TrackMyAmazon interface"
+            loading="lazy"
+            style="aspect-ratio: 2443 / 1576"
+          />
+        </div>
+
+        <hr/>
+
+       <!-- Word Guess Game -->
+        <h2><a href="https://github.com/shres1974/wordle" target="_blank">Word Guess Game</a></h2>
+        <h3>Java Swing • Wordle-style</h3>
+        <ul class="skills">
+          <li>Java</li><li>Swing</li><li>Game</li>
+        </ul>
+        <p>
+          A Wordle-inspired game with adjustable word lengths (3–10), color-coded feedback, and a simple GUI. 
+          Includes reset/end-game controls and a word loader from <code>words.txt</code>. MIT licensed.
+        </p>
+
+        <!-- Demo GIF -->
+        <div class="image">
+          <img
+            src="/src/img/wordle.gif"
+            width="100%"
+            alt="Word Guess Game demo animation"
+            loading="lazy"
+            style="aspect-ratio: 16 / 9"
+          />
+        </div>
+
+        <hr/>
+    </section>
+
+      <!-- CONTACT -->
+      <section>
+        <h1 id="contact">Contact</h1>
+        <p style="text-align: center">
+          Reach out on
+          <a href="https://www.linkedin.com/in/nischalshres/"><u><b>LinkedIn</b></u></a>
+          or email
+          <a href="mailto:nischalshrestha@cmail.carleton.ca"><u><b>nischalshrestha@cmail.carleton.ca</b></u></a>
+        </p>
+      </section>
+    </main>
+
+    <input type="text" id="textarea" readonly />
+    <div id="loading">
+      <h2>Booting...</h2>
+      <div id="loading-bar">
+        <div id="loading-bar-progress"></div>
+      </div>
+      <div id="loading-items">Starting...</div>
+    </div>
+
+    <footer>
+      <div>Developed by Nischal Shrestha.</div>
+      <div>Computer design based on the Commodore PET 8296.</div>
+      <div>COPYRIGHT © 2024–2025 Nischal Shrestha.</div>
+    </footer>
+
+    <script>
+      function closeMenu() {
+        document.getElementsByTagName("nav")[0].classList.remove("active");
+      }
+      function toggleMenu() {
+        const nav = document.getElementsByTagName("nav")[0];
+        if (nav.classList.contains("active")) {
+          nav.classList.remove("active");
+        } else {
+          nav.classList.add("active");
+        }
+      }
+    </script>
+
+    <!-- keep helper + webgl theme script to preserve look/feel -->
+    <script
+      fetchpriority="high"
+      src="https://cdn-ts.netlify.app/webgl-helper@3.0.11/webgl-helper.min.js"
+    ></script>
+
+    <!-- Google Analytics (optional) -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA4_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "YOUR_GA4_ID");
+      gtag("event", "origin", { name: window.origin });
+    </script>
+    -->
+  </body>
+</html>
